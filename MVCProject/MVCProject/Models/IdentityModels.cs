@@ -29,5 +29,7 @@ namespace MVCProject.Models
         {
             return new ApplicationDbContext();
         }
+
+		public System.Data.Entity.DbSet<MVCProject.Models.BlogEntry> BlogEntries { get; set; }
     }
 }
