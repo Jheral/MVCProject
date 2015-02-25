@@ -23,6 +23,18 @@ namespace MVCProject {
 			bundles.Add(new StyleBundle("~/Content/css").Include(
 					  "~/Content/bootstrap.css",
 					  "~/Content/site.css"));
+
+			bundles.Add(new StyleBundle("~/Content/darkly").Include(
+					  "~/Content/bootstrap.darkly.css",
+					  "~/Content/site.css"));
+
+			bundles.Add(new StyleBundle("~/Content/sandstone").Include(
+					  "~/Content/bootstrap.sandstone.css",
+					  "~/Content/site.css"));
+
+			bundles.Add(new StyleBundle("~/Content/slate").Include(
+					  "~/Content/bootstrap.slate.css",
+					  "~/Content/site.css"));
 		}
 	}
 }
