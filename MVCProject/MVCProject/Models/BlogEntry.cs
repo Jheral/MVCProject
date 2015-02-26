@@ -46,5 +46,28 @@ namespace MVCProject.Models {
 		/// A collection of comments that relate to the post
 		/// </summary>
 		public virtual ICollection<Comment> Comments { get; set; }
+
+		public BlogEntry() {
+			this.Tags = new HashSet<Tag>();
+			this.Comments = new HashSet<Comment>();
+		}
+
+		public BlogEntry(string title, string content, string thumbnail)
+			: this() {
+				this.Title = title;
+				this.Content = content;
+				this.Thumbnail = thumbnail;
+				this.Created = DateTime.Now;
+		}
+
+		public BlogEntry(string title, string content, string thumbnail, DateTime created)
+			: this(title, content, thumbnail) {
+				this.Created = created;
+		}
+
+		public BlogEntry(string title, string content, string thumbnail, BlogEntry previous)
+			: this(title, content, thumbnail) {
+				this.PreviousVersion = previous;
+		}
 	}
 }

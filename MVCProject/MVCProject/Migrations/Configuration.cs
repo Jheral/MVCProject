@@ -1,9 +1,10 @@
 namespace MVCProject.Migrations
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
+	using MVCProject.Models;
+	using System;
+	using System.Data.Entity;
+	using System.Data.Entity.Migrations;
+	using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<MVCProject.Models.ApplicationDbContext>
     {
@@ -14,18 +15,13 @@ namespace MVCProject.Migrations
 
         protected override void Seed(MVCProject.Models.ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+			context.BlogEntries.AddOrUpdate(
+				b => b.Title,
+				new BlogEntry("This is a blog post", "Content goes in here, to fill out the post. If there is no content, one usually uses lorem ipsum, which is a sort of \"filler\" text that you use to test element width and such, but I feel like using just normal text atm. It feels a bit less like cheating, and more like you're actually doing something, even if you're not.", "http://lorempixel.com/100/100"),
+				new BlogEntry("This is a another blog post", "Content goes in here, to fill out the post. If there is no content, one usually uses lorem ipsum, which is a sort of \"filler\" text that you use to test element width and such, but I feel like using just normal text atm. It feels a bit less like cheating, and more like you're actually doing something, even if you're not.", "http://lorempixel.com/100/100"),
+				new BlogEntry("This is a a third blog post", "Content goes in here, to fill out the post. If there is no content, one usually uses lorem ipsum, which is a sort of \"filler\" text that you use to test element width and such, but I feel like using just normal text atm. It feels a bit less like cheating, and more like you're actually doing something, even if you're not.", "http://lorempixel.com/100/100"),
+				new BlogEntry("This is a blog post lost in time - made before all others were created", "Content goes in here, to fill out the post. If there is no content, one usually uses lorem ipsum, which is a sort of \"filler\" text that you use to test element width and such, but I feel like using just normal text atm. It feels a bit less like cheating, and more like you're actually doing something, even if you're not.", "http://lorempixel.com/100/100", new DateTime(1961, 3, 12))
+				);
         }
     }
 }
