@@ -47,11 +47,20 @@ namespace MVCProject.Models {
 		/// </summary>
 		public virtual ICollection<Comment> Comments { get; set; }
 
-		public BlogEntry() {
+		/// <summary>
+		/// Initialization of Tag and Comment Collections
+		/// </summary>
+		private BlogEntry() {
 			this.Tags = new HashSet<Tag>();
 			this.Comments = new HashSet<Comment>();
 		}
 
+		/// <summary>
+		/// "Normal" Constructor
+		/// </summary>
+		/// <param name="title">The title of the entry</param>
+		/// <param name="content">The content of the entry</param>
+		/// <param name="thumbnail">The URL to the entry's thumbnail</param>
 		public BlogEntry(string title, string content, string thumbnail)
 			: this() {
 				this.Title = title;
@@ -60,14 +69,62 @@ namespace MVCProject.Models {
 				this.Created = DateTime.Now;
 		}
 
+		/// <summary>
+		/// Constructor to use while making a post with a specific timestamp, rather than using DateTime.Now.
+		/// </summary>
+		/// <param name="title">The title of the entry</param>
+		/// <param name="content">The content of the entry</param>
+		/// <param name="thumbnail">The URL to the entry's thumbnail</param>
+		/// <param name="created">DateTime object for the time of creation</param>
 		public BlogEntry(string title, string content, string thumbnail, DateTime created)
 			: this(title, content, thumbnail) {
 				this.Created = created;
 		}
 
+		/// <summary>
+		/// Constructor to use while editing a post - creates a new blog entry and stores the old one in it.
+		/// </summary>
+		/// <param name="title">The title of the entry</param>
+		/// <param name="content">The content of the entry</param>
+		/// <param name="thumbnail">The URL to the entry's thumbnail</param>
+		/// <param name="previous">The previous entry, to be stored for version history purposes</param>
 		public BlogEntry(string title, string content, string thumbnail, BlogEntry previous)
 			: this(title, content, thumbnail) {
 				this.PreviousVersion = previous;
+		}
+
+		/// <summary>
+		/// Adds a comment to the blog entry
+		/// </summary>
+		/// <param name="c">Comment to add</param>
+		public void AddComment(Comment c) {
+			if (!this.Comments.Contains(c)) { this.Comments.Add(c); }
+		}
+
+		/// <summary>
+		/// Removes a comment from the blog entry
+		/// </summary>
+		/// <param name="c">Comment to remove</param>
+		public void RemoveComment(Comment c) {
+			if (this.Comments.Contains(c)) { this.Comments.Remove(c); }
+		}
+
+		/// <summary>
+		/// Adds a tag to the blog entry, and adds the blog entry to the tag's list
+		/// </summary>
+		/// <param name="t">Tag to add</param>
+		public void AddTag(Tag t) {
+			if (!this.Tags.Contains(t)) { this.Tags.Add(t); }
+			if (!t.BlogEntries.Contains(this)) { t.BlogEntries.Add(this); }
+		}
+
+		/// <summary>
+		/// Removes a tag from the blog entry, and removes the blog entry from the tag's list
+		/// </summary>
+		/// <param name="t">Tag to remove</param>
+		public void RemoveTag(Tag t) {
+			if (this.Tags.Contains(t)) { this.Tags.Remove(t); }
+			if (t.BlogEntries.Contains(this)) { t.BlogEntries.Remove(this); }
 		}
 	}
 }

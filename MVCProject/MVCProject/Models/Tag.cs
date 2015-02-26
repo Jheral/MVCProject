@@ -25,5 +25,15 @@ namespace MVCProject.Models {
 		/// A list of blog posts that have this tag
 		/// </summary>
 		public virtual ICollection<BlogEntry> BlogEntries { get; set; }
+
+		public Tag() {
+			this.BlogEntries = new HashSet<BlogEntry>();
+		}
+
+		public Tag(String display, string internalName)
+			: this() {
+				this.Display = display;
+				this.InternalName = internalName;
+		}
 	}
 }

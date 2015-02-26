@@ -31,5 +31,7 @@ namespace MVCProject.Models
         }
 
 		public System.Data.Entity.DbSet<MVCProject.Models.BlogEntry> BlogEntries { get; set; }
+		public System.Data.Entity.DbSet<MVCProject.Models.Comment> Comments { get; set; }
+		public System.Data.Entity.DbSet<MVCProject.Models.Tag> Tags { get; set; }
     }
 }

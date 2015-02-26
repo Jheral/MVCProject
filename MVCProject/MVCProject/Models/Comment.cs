@@ -37,5 +37,41 @@ namespace MVCProject.Models {
 		/// The BlogEntry or StoreItem to which the comment belongs.
 		/// </summary>
 		public BlogEntry ParentEntry { get; set; }
+		
+		public Comment() {
+		}
+
+		/// <summary>
+		/// "Normal" Constructor
+		/// </summary>
+		/// <param name="title">Comment's Title</param>
+		/// <param name="content">Comment's Content</param>
+		public Comment(string title, string content) {
+			this.Title = title;
+			this.Content = content;
+			this.Created = DateTime.Now;
+		}
+
+		/// <summary>
+		/// "Retroactive" Constructor - use this to create comments for specific dates
+		/// </summary>
+		/// <param name="title">Comment's Title</param>
+		/// <param name="content">Comment's Content</param>
+		/// <param name="created">The intended timestamp for the comment</param>
+		public Comment(string title, string content, DateTime created)
+			: this(title, content) {
+				this.Created = created;
+		}
+
+		/// <summary>
+		/// "Edit" Constructor - use this to edit a comment
+		/// </summary>
+		/// <param name="title">Comment's Title</param>
+		/// <param name="content">Comment's Content</param>
+		/// <param name="previous">The "current" comment, that is to be stored</param>
+		public Comment(string title, string content, Comment previous)
+			: this(title, content) {
+				this.PreviousVersion = previous;
+		}
 	}
 }
