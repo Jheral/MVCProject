@@ -169,6 +169,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BlogEntry.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\HomeIndexModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Tag.cs" />
@@ -242,6 +243,7 @@
     <Content Include="Views\BlogEntries\Edit.cshtml" />
     <Content Include="Views\BlogEntries\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_BlogPost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

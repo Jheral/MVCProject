@@ -28,15 +28,15 @@ namespace MVCProject.Models {
 		/// <summary>
 		/// The previous version of the post - this should be null if there has been no edits.
 		/// </summary>
-		public Comment PreviousVersion { get; set; }
+		public virtual Comment PreviousVersion { get; set; }
 		/// <summary>
 		/// The author of the post; alternatively the author of the last edit, if any such editing has taken place.
 		/// </summary>
-		public ApplicationUser Author { get; set; }
+		public virtual ApplicationUser Author { get; set; }
 		/// <summary>
 		/// The BlogEntry or StoreItem to which the comment belongs.
 		/// </summary>
-		public BlogEntry ParentEntry { get; set; }
+		public virtual BlogEntry ParentEntry { get; set; }
 		
 		public Comment() {
 		}

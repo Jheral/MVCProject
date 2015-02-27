@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -30,14 +31,45 @@ namespace MVCProject.Models {
 		/// </summary>
 		public DateTime Created { get; set; }
 
+		public string TimeStamp {
+			get {
+				string timeSince = "";
+				TimeSpan span = DateTime.Now.Subtract(this.Created);
+				int i;
+
+				if (span.TotalHours < 1)
+					timeSince = string.Format("{0} minutes ago", (int)span.TotalMinutes);
+				else if (span.TotalDays < 1)
+					timeSince = string.Format("{0} hours ago", (int)span.TotalHours);
+				else if (span.TotalDays < 7)
+					timeSince = string.Format("{0} days ago", (int)span.TotalDays);
+				else if (span.TotalDays < 28) {
+					i = ((int)span.TotalDays / 7);
+					timeSince = string.Format("{0} {1} ago", i, (i > 1 ? "weeks" : "week"));
+				} else if (span.TotalDays < 365) {
+					i = ((int)span.TotalDays / 28);
+					timeSince = string.Format("{0} {1} ago", i, (i > 1 ? "months" : "month"));
+				} else if (span.TotalDays < 1825) {
+					i = ((int)span.TotalDays / 365);
+					timeSince = string.Format("{0} {1} ago", i, (i > 1 ? "years" : "year"));
+				} else if (span.TotalDays > 1825) {
+					timeSince = "more than 5 years ago";
+				}
+
+				return String.Format("{0} ({1})", timeSince,
+						this.Created.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
+					);
+			}
+		}
+
 		/// <summary>
 		/// The previous version of the post - this should be null if there has been no edits.
 		/// </summary>
-		public BlogEntry PreviousVersion { get; set; }
+		public virtual BlogEntry PreviousVersion { get; set; }
 		/// <summary>
 		/// The author of the post; alternatively the author of the last edit, if any such editing has taken place.
 		/// </summary>
-		public ApplicationUser Author { get; set; }
+		public virtual ApplicationUser Author { get; set; }
 		/// <summary>
 		/// A collection of posts that relate to the post
 		/// </summary>
@@ -50,7 +82,7 @@ namespace MVCProject.Models {
 		/// <summary>
 		/// Initialization of Tag and Comment Collections
 		/// </summary>
-		private BlogEntry() {
+		public BlogEntry() {
 			this.Tags = new HashSet<Tag>();
 			this.Comments = new HashSet<Comment>();
 		}
@@ -63,10 +95,10 @@ namespace MVCProject.Models {
 		/// <param name="thumbnail">The URL to the entry's thumbnail</param>
 		public BlogEntry(string title, string content, string thumbnail)
 			: this() {
-				this.Title = title;
-				this.Content = content;
-				this.Thumbnail = thumbnail;
-				this.Created = DateTime.Now;
+			this.Title = title;
+			this.Content = content;
+			this.Thumbnail = thumbnail;
+			this.Created = DateTime.Now;
 		}
 
 		/// <summary>
@@ -78,7 +110,7 @@ namespace MVCProject.Models {
 		/// <param name="created">DateTime object for the time of creation</param>
 		public BlogEntry(string title, string content, string thumbnail, DateTime created)
 			: this(title, content, thumbnail) {
-				this.Created = created;
+			this.Created = created;
 		}
 
 		/// <summary>
@@ -90,7 +122,7 @@ namespace MVCProject.Models {
 		/// <param name="previous">The previous entry, to be stored for version history purposes</param>
 		public BlogEntry(string title, string content, string thumbnail, BlogEntry previous)
 			: this(title, content, thumbnail) {
-				this.PreviousVersion = previous;
+			this.PreviousVersion = previous;
 		}
 
 		/// <summary>
