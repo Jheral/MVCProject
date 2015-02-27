@@ -22,6 +22,10 @@ namespace MVCProject.Models {
 		/// </summary>
 		public String Content { get; set; }
 		/// <summary>
+		/// A truncated version of the post's content
+		/// </summary>
+		public String ContentShort { get { return this.Content; } }
+		/// <summary>
 		/// The URL to the thumbnail that is to be used for this post
 		/// </summary>
 		public String Thumbnail { get; set; }

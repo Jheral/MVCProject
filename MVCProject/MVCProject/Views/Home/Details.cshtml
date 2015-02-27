@@ -1,0 +1,12 @@
+﻿@model MVCProject.Models.BlogEntry
+
+@{
+    ViewBag.Title = Model.Title;
+}
+<div>
+    @Html.Partial("_BlogPost_Full", Model)
+</div>
+
+<div id="Comments" class="jumbotron">
+       
+</div>

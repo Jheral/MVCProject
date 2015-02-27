@@ -10,10 +10,6 @@ namespace MVCProject.Controllers {
 		ApplicationDbContext context = new ApplicationDbContext();
 
 		public ActionResult Index(int offset = 0) {
-			HomeIndexModel model = new HomeIndexModel();
-
-
-
 			return View(context.BlogEntries);
 		}
 
@@ -27,6 +23,11 @@ namespace MVCProject.Controllers {
 			ViewBag.Message = "Your contact page.";
 
 			return View();
+		}
+
+		public ActionResult Details(int id) {
+			
+			return View(context.BlogEntries.First(b => b.Id == id));
 		}
 	}
 }

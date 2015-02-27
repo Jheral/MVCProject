@@ -243,7 +243,9 @@
     <Content Include="Views\BlogEntries\Edit.cshtml" />
     <Content Include="Views\BlogEntries\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_BlogPost.cshtml" />
+    <Content Include="Views\Shared\_BlogPost_List.cshtml" />
+    <Content Include="Views\Shared\_BlogPost_Full.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
