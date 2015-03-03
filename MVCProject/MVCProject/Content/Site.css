@@ -22,3 +22,25 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.comment-title {
+    font-size: 1.2em;
+}
+
+.comment-text {
+    font-size: 1em;
+}
+
+.comment-timestamp {
+    font-size: 0.8em;
+    color: lightgray;
+}
+
+.comment-true {
+}
+
+#comment-wrapper {
+    padding-top:20px;
+    padding-bottom:10px;
+    overflow:auto;
+}

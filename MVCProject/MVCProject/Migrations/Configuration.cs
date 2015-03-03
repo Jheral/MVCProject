@@ -13,14 +13,18 @@ namespace MVCProject.Migrations
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(MVCProject.Models.ApplicationDbContext context)
-        {
+        protected override void Seed(MVCProject.Models.ApplicationDbContext context) {
 			string filler = "Content goes in here, to fill out the post. If there is no content, one usually uses lorem ipsum, which is a sort of \"filler\" text that you use to test element width and such, but I feel like using just normal text atm. It feels a bit less like cheating, and more like you're actually doing something, even if you're not.";
 
 			BlogEntry b1 = new BlogEntry("This is a blog post", filler, "http://lorempixel.com/100/100");
 			BlogEntry b2 = new BlogEntry("This is a another blog post", filler, "http://lorempixel.com/100/100");
 			BlogEntry b3 = new BlogEntry("This is a a third blog post", filler, "http://lorempixel.com/100/100");
 			BlogEntry b4 = new BlogEntry("This is a blog post lost in time - made before all others were created", filler, "http://lorempixel.com/100/100", new DateTime(1961, 3, 12));
+
+			b1.Id = 1;
+			b2.Id = 2;
+			b3.Id = 3;
+			b4.Id = 4;
 
 			Tag t1 = new Tag("Stuff", "TAG_STUFF");
 			Tag t2 = new Tag("Filler", "TAG_FILLER");
@@ -32,7 +36,15 @@ namespace MVCProject.Migrations
 			Comment c4 = new Comment("Comment Titles", "Do you really need to use a comment title?");
 			Comment c5 = new Comment("", "Nope - it's completely optional (and should be implemented as such, Elias!)");
 			Comment c6 = new Comment("", "How the hell did you manage to post something here before the Internet even existed?");
-			Comment c7 = new Comment("Beyond First!", "I am the master of time itself! No matter how you try, you can never post before me!",  new DateTime(1886, 11, 5));
+			Comment c7 = new Comment("Beyond First!", "I am the master of time itself! No matter how you try, you can never post before me!", new DateTime(1886, 11, 5));
+
+			c1.Id = 1;
+			c2.Id = 2;
+			c3.Id = 3;
+			c4.Id = 4;
+			c5.Id = 5;
+			c6.Id = 6;
+			c7.Id = 7;
 
 			b1.AddComment(c1);
 			b1.AddComment(c2);
@@ -50,9 +62,9 @@ namespace MVCProject.Migrations
 			b4.AddComment(c6);
 			b4.AddComment(c7);
 
-			context.Tags.AddOrUpdate(t1, t2, t3);
-			context.Comments.AddOrUpdate(c1, c2, c3, c4, c5, c6, c7);
-			context.BlogEntries.AddOrUpdate(b1, b2, b3, b4);
+			context.Tags.AddOrUpdate(t => t.InternalName, t1, t2, t3);
+			context.Comments.AddOrUpdate(c => c.Id, c1, c2, c3, c4, c5, c6, c7);
+			context.BlogEntries.AddOrUpdate(b => b.Id, b1, b2, b3, b4);
         }
     }
 }

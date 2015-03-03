@@ -1,0 +1,13 @@
+﻿@model MVCProject.Models.Comment
+
+<div class="col-md-10 col-sm-9">
+    <span class="comment-title">@Model.Title</span> 
+    <div class="row">
+        <div class="col-xs-9">
+            <span class="comment-text">@Model.Content</span>
+        </div>
+    </div>
+    <span class="comment-timestamp">@String.Format("Posted {0} by {1}", Model.Created, Model.AuthorName)</span>
+    <br><br>
+</div>
+

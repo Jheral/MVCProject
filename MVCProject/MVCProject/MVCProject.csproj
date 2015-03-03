@@ -252,6 +252,7 @@
     <Content Include="Views\Shared\_BlogPost_List.cshtml" />
     <Content Include="Views\Shared\_BlogPost_Full.cshtml" />
     <Content Include="Views\Home\Details.cshtml" />
+    <Content Include="Views\Shared\_Comment.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
