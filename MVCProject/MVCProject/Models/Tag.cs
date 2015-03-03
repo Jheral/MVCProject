@@ -16,10 +16,14 @@ namespace MVCProject.Models {
 		/// <summary>
 		/// The display name of the tag
 		/// </summary>
+		[Required]
 		public String Display { get; set; }
 		/// <summary>
 		/// The internal ID of the tag
 		/// </summary>
+		[Index(IsUnique=true)]
+		[MaxLength(200)]
+		[Required]
 		public String InternalName { get; set; }
 		/// <summary>
 		/// A list of blog posts that have this tag

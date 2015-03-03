@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -19,6 +20,10 @@ namespace MVCProject.Models {
 		/// The content and/or description of the comment
 		/// </summary>
 		public String Content { get; set; }
+		/// <summary>
+		/// The handle of the author
+		/// </summary>
+		public String AuthorName { get; set; }
 
 		/// <summary>
 		/// The timestamp for the creation for the post; alternatively the timestamp for the last edit, if any such editing has taken place.
@@ -58,9 +63,15 @@ namespace MVCProject.Models {
 		/// <param name="title">Comment's Title</param>
 		/// <param name="content">Comment's Content</param>
 		/// <param name="created">The intended timestamp for the comment</param>
-		public Comment(string title, string content, DateTime created)
+		public Comment(string title, string content, DateTime created, ApplicationUser author = null)
 			: this(title, content) {
 				this.Created = created;
+				if (author != null) {
+					this.Author = author;
+					this.AuthorName = author.UserName;
+				} else {
+					this.AuthorName = "Anonymous";
+				}
 		}
 
 		/// <summary>
@@ -69,8 +80,8 @@ namespace MVCProject.Models {
 		/// <param name="title">Comment's Title</param>
 		/// <param name="content">Comment's Content</param>
 		/// <param name="previous">The "current" comment, that is to be stored</param>
-		public Comment(string title, string content, Comment previous)
-			: this(title, content) {
+		public Comment(string title, string content, Comment previous, ApplicationUser author)
+			: this(title, content, DateTime.Now, author) {
 				this.PreviousVersion = previous;
 		}
 	}

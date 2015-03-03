@@ -2,11 +2,18 @@
 
 @{
     ViewBag.Title = Model.Title;
+    bool even = false;
 }
 <div>
     @Html.Partial("_BlogPost_Full", Model)
 </div>
 
-<div id="Comments" class="jumbotron">
-       
+
+<div id="comment-wrapper" class="jumbotron">
+    @foreach (MVCProject.Models.Comment c in Model.Comments.OrderBy(c => c.Created)) {
+        <div class="comment-@even.ToString().ToLower()">
+            @Html.Partial("_Comment", c)
+        </div>
+        even = !even;
+    }
 </div>
