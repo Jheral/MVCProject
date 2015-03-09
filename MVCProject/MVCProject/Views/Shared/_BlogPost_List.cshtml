@@ -12,7 +12,7 @@
                 <p>@Model.ContentShort</p>
                 <p class="lead">@Html.ActionLink("Read More", "Details", "Home", new { id = Model.Id }, new { @class = "btn btn-default" })</p>
                 <p class="pull-right">@foreach (MVCProject.Models.Tag t in Model.Tags) {<span class="label label-default">@t.Display</span> }</p>
-                <ul class="list-inline"><li>@Model.TimeStamp</li><li>@Html.ActionLink(@Model.Comments.Count + " Comments", "Details", "Home", new { id = Model.Id }, null)</li></ul>
+                <ul class="list-inline"><li>@Model.TimeStamp by @Model.Author.UserName</li><li>@Html.ActionLink(@Model.Comments.Count + " Comments", "Details", "Home", new { id = Model.Id }, null)</li></ul>
             </div>
             <div class="col-xs-3"></div>
         </div>

@@ -34,7 +34,9 @@ namespace MVCProject.Models {
 		/// The timestamp for the creation for the post; alternatively the timestamp for the last edit, if any such editing has taken place.
 		/// </summary>
 		public DateTime Created { get; set; }
-
+		/// <summary>
+		/// Returns the time since the post was made, in a suitable format (X days ago, X weeks ago etc...)
+		/// </summary>
 		public string TimeStamp {
 			get {
 				string timeSince = "";
@@ -73,7 +75,10 @@ namespace MVCProject.Models {
 		/// <summary>
 		/// The author of the post; alternatively the author of the last edit, if any such editing has taken place.
 		/// </summary>
-		public virtual ApplicationUser Author { get; set; }
+		public virtual ApplicationUser Author {
+			get;
+			set;
+		}
 		/// <summary>
 		/// A collection of posts that relate to the post
 		/// </summary>

@@ -1,5 +1,7 @@
 namespace MVCProject.Migrations
 {
+	using Microsoft.AspNet.Identity;
+	using Microsoft.AspNet.Identity.EntityFramework;
 	using MVCProject.Models;
 	using System;
 	using System.Data.Entity;
@@ -13,7 +15,64 @@ namespace MVCProject.Migrations
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(MVCProject.Models.ApplicationDbContext context) {
+        protected override void Seed(MVCProject.Models.ApplicationDbContext context)
+        {
+			//context.Database.Delete();
+			//context.Database.Initialize(true);
+
+			var userStore = new UserStore<ApplicationUser>(context);
+			var userManager = new UserManager<ApplicationUser>(userStore);
+
+			ApplicationUser user1 = new ApplicationUser() {
+				UserName = "EliasHvo",
+				FirstName = "Elias",
+				LastName = "Hvornum",
+				Email = "elias@hvo.se"
+			};
+
+			ApplicationUser user2 = new ApplicationUser() {
+				UserName = "Jheral",
+				FirstName = "Eric",
+				LastName = "Lindroth",
+				Email = "admin@ericlindroth.se"
+			};
+
+			ApplicationUser user3 = new ApplicationUser() {
+				UserName = "NordicWolf",
+				FirstName = "Ulf",
+				LastName = "Bengtsson",
+				Email = "ulf@nordicwolf.se"
+			};
+
+			ApplicationUser user4 = new ApplicationUser() {
+				UserName = "PeterL",
+				FirstName = "Peter",
+				LastName = "Lindström",
+				Email = "plindstrom@hotmail.com"
+			};
+			userManager.Create(user1, "Password_1");
+			userManager.Create(user2, "Password_1");
+			userManager.Create(user3, "Password_1");
+			userManager.Create(user4, "Password_1");
+
+			var roleStore = new RoleStore<IdentityRole>(context);
+			var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+			roleManager.Create(new IdentityRole("Admin"));
+			roleManager.Create(new IdentityRole("Editor"));
+			roleManager.Create(new IdentityRole("Moderator"));
+			roleManager.Create(new IdentityRole("User"));
+
+			ApplicationUser dbUser1 = userManager.FindByEmail(user1.Email);
+			ApplicationUser dbUser2 = userManager.FindByEmail(user2.Email);
+			ApplicationUser dbUser3 = userManager.FindByEmail(user3.Email);
+			ApplicationUser dbUser4 = userManager.FindByEmail(user4.Email);
+
+			userManager.AddToRole(dbUser1.Id, "Admin");
+			userManager.AddToRole(dbUser2.Id, "Editor");
+			userManager.AddToRole(dbUser3.Id, "Moderator");
+			userManager.AddToRole(dbUser4.Id, "User");
+
 			string filler = "Content goes in here, to fill out the post. If there is no content, one usually uses lorem ipsum, which is a sort of \"filler\" text that you use to test element width and such, but I feel like using just normal text atm. It feels a bit less like cheating, and more like you're actually doing something, even if you're not.";
 
 			BlogEntry b1 = new BlogEntry("This is a blog post", filler, "http://lorempixel.com/100/100");
@@ -50,17 +109,22 @@ namespace MVCProject.Migrations
 			b1.AddComment(c2);
 			b1.AddComment(c3);
 			b1.AddTag(t1);
+			dbUser1.AddPost(b1);
 
 			b2.AddTag(t1);
 			b2.AddTag(t2);
 			b2.AddComment(c4);
 			b2.AddComment(c5);
+			b2.Author = dbUser1;
+			dbUser1.AddPost(b2);
 
 			b3.AddTag(t2);
+			dbUser2.AddPost(b3);
 
 			b4.AddTag(t3);
 			b4.AddComment(c6);
 			b4.AddComment(c7);
+			dbUser1.AddPost(b4);
 
 			context.Tags.AddOrUpdate(t => t.InternalName, t1, t2, t3);
 			context.Comments.AddOrUpdate(c => c.Id, c1, c2, c3, c4, c5, c6, c7);

@@ -23,7 +23,15 @@ namespace MVCProject.Models {
 		/// <summary>
 		/// The handle of the author
 		/// </summary>
-		public String AuthorName { get; set; }
+		public String AuthorName {
+			get {
+				if (this.Author == null) {
+					return "Anonymous";
+				} else {
+					return this.Author.UserName;
+				}
+			}
+		}
 
 		/// <summary>
 		/// The timestamp for the creation for the post; alternatively the timestamp for the last edit, if any such editing has taken place.
@@ -66,12 +74,6 @@ namespace MVCProject.Models {
 		public Comment(string title, string content, DateTime created, ApplicationUser author = null)
 			: this(title, content) {
 				this.Created = created;
-				if (author != null) {
-					this.Author = author;
-					this.AuthorName = author.UserName;
-				} else {
-					this.AuthorName = "Anonymous";
-				}
 		}
 
 		/// <summary>

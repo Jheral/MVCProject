@@ -1,4 +1,6 @@
-﻿using MVCProject.Models;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using MVCProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
