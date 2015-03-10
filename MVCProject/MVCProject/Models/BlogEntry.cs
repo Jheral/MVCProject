@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace MVCProject.Models {
 	[Table("BlogEntries")] // The table this class will be added to
@@ -20,10 +21,12 @@ namespace MVCProject.Models {
 		/// <summary>
 		/// The content and/or description of the post
 		/// </summary>
+		[UIHint("tinymce_full"), AllowHtml]
 		public String Content { get; set; }
 		/// <summary>
 		/// A truncated version of the post's content
 		/// </summary>
+		[UIHint("tinymce_full"), AllowHtml]
 		public String ContentShort { get { return this.Content; } }
 		/// <summary>
 		/// The URL to the thumbnail that is to be used for this post

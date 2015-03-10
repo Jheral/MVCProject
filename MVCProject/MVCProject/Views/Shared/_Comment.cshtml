@@ -4,10 +4,15 @@
     <span class="comment-title">@Model.Title</span> 
     <div class="row">
         <div class="col-xs-9">
-            <span class="comment-text">@Model.Content</span>
+            <span class="comment-text">@Html.Raw(Model.Content)</span>
         </div>
     </div>
     <span class="comment-timestamp">@String.Format("Posted {0} by {1}", Model.Created, Model.AuthorName)</span>
+    @if (Request.IsAuthenticated) {
+        if (true) { <!--User.IsInRole("Admin") || User.IsInRole("Editor") || User.IsInRole("Moderator")-->
+            <br><span><a href="~/Comments/Edit/@Model.Id">Edit</a>  <a href="~/Comments/Delete/@Model.Id">Delete</a></span>
+        }
+    }
     <br><br>
 </div>
 

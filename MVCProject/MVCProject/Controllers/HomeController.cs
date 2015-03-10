@@ -31,5 +31,38 @@ namespace MVCProject.Controllers {
 			
 			return View(context.BlogEntries.First(b => b.Id == id));
 		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Details(int id, [Bind(Include = "Title,Content,User")] Comment comment) {
+			BlogEntry current = context.BlogEntries.First(b => b.Id == id);
+			string guid = HttpContext.User.Identity.GetUserId();
+			ApplicationUser user = context.Users.First(u => u.Id == guid);
+			current.AddComment(comment);
+			user.AddComment(comment);
+			comment.Created = DateTime.Now;
+
+			context.Comments.Add(comment);
+			context.SaveChanges();
+			return View(current);
+		}
+
+		[HttpGet]
+		public ActionResult BlogList(int User, int Tag) {
+			List<BlogEntry> list = new List<BlogEntry>();
+			return View();
+		}
+
+		[HttpGet]
+		public ActionResult CommentList(int User) {
+			return View();
+		}
+
+		protected override void Dispose(bool disposing) {
+			if (disposing) {
+				context.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 	}
 }

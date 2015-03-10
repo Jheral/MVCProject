@@ -3,16 +3,16 @@
 <div class="row">
     <br>
     <div class="col-md-2 col-sm-3 text-center">
-        <a class="story-img" href="#"><img src="@Model.Thumbnail" style="width:100px;height:100px" class="img-circle"></a>
+        <a class="story-img" href="/Home/Details/@Model.Id"><img src="@Model.Thumbnail" style="width:100px;height:100px" class="img-circle"></a>
     </div>
     <div class="col-md-10 col-sm-9">
-        <h3>@Model.Title</h3>
+        <h3>@Html.ActionLink(@Model.Title, "Details", "Home", new { id = Model.Id }, null)</h3>
         <div class="row">
             <div class="col-xs-9">
                 <p>@Model.ContentShort</p>
                 <p class="lead">@Html.ActionLink("Read More", "Details", "Home", new { id = Model.Id }, new { @class = "btn btn-default" })</p>
-                <p class="pull-right">@foreach (MVCProject.Models.Tag t in Model.Tags) {<span class="label label-default">@t.Display</span> }</p>
                 <ul class="list-inline"><li>@Model.TimeStamp by @Model.Author.UserName</li><li>@Html.ActionLink(@Model.Comments.Count + " Comments", "Details", "Home", new { id = Model.Id }, null)</li></ul>
+                <p class="pull-right">@foreach (MVCProject.Models.Tag t in Model.Tags) {<span class="label label-default">@t.Display</span> }</p>
             </div>
             <div class="col-xs-3"></div>
         </div>

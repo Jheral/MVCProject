@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace MVCProject.Models {
 	[Table("Comments")] // The table this class will be added to
@@ -19,6 +20,7 @@ namespace MVCProject.Models {
 		/// <summary>
 		/// The content and/or description of the comment
 		/// </summary>
+		[UIHint("tinymce_comment"), AllowHtml]
 		public String Content { get; set; }
 		/// <summary>
 		/// The handle of the author
