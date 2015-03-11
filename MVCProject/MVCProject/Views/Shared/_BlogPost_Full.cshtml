@@ -9,12 +9,12 @@
         <h3>@Model.Title</h3>
         <div class="row">
             <div class="col-xs-9">
-                <p>@Model.Content</p>
+                <p>@Html.Raw(Model.ContentShort)</p>
             </div>
         </div>
         <br><br>
     </div>
 </div>
 <hr>
-<p class="pull-right">@foreach (MVCProject.Models.Tag t in Model.Tags) {<span class="label label-default">@t.Display</span> }</p>
-<ul class="list-inline"><li>@Model.TimeStamp by @Model.Author.UserName</li><li><a href=""><i class="glyphicon glyphicon-comment"></i> @Model.Comments.Count Comments</a></li></ul>
+<p class="pull-right">@foreach (MVCProject.Models.Tag t in Model.Tags) {<span class="label label-default">@Html.ActionLink(@t.Display, "BlogList", "Home", new { Tag = @t.InternalName }, null)</span> }</p>
+<ul class="list-inline"><li>@Model.TimeStamp by @Html.ActionLink(@Model.Author.UserName, "BlogList", "Home", new { User = @Model.Author.UserName }, null)</li><li><a href=""><i class="glyphicon glyphicon-comment"></i> @Model.Comments.Count Comments</a></li></ul>

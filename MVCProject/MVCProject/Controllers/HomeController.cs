@@ -2,17 +2,19 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using MVCProject.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace MVCProject.Controllers {
 	public class HomeController : Controller {
 		ApplicationDbContext context = new ApplicationDbContext();
 
-		public ActionResult Index(int offset = 0) {
-			return View(context.BlogEntries);
+		public ActionResult Index(int? Page) {
+			return View(context.BlogEntries.OrderByDescending(m => m.Created).ToPagedList(Page ?? 1, 3));
 		}
 
 		public ActionResult About() {
@@ -47,15 +49,27 @@ namespace MVCProject.Controllers {
 			return View(current);
 		}
 
-		[HttpGet]
-		public ActionResult BlogList(int User, int Tag) {
-			List<BlogEntry> list = new List<BlogEntry>();
-			return View();
-		}
-
-		[HttpGet]
-		public ActionResult CommentList(int User) {
-			return View();
+		public ActionResult BlogList(string User, string Tag, int? Page) {
+			List<BlogEntry> list = new List<BlogEntry>(context.BlogEntries.ToList().OrderByDescending(b => b.Created));
+			if (!string.IsNullOrEmpty(User)) {
+				string uName = User.ToString();
+				if (context.Users.Any(u => u.UserName == uName)) {
+					ApplicationUser _user = context.Users.First(u => u.UserName == uName); 
+					list = list.FindAll(b => b.Author == _user);
+				} else {
+					return View(new List<BlogEntry>());
+				}
+			}
+			if (!string.IsNullOrEmpty(Tag)) {
+				string tagName = Tag.ToString();
+				if (context.Tags.Any(t => t.InternalName == tagName)) {
+					Tag _tag = context.Tags.First(t => t.InternalName == tagName);
+					list = list.FindAll(b => b.Tags.Contains(_tag));
+				} else {
+					return View(new List<BlogEntry>());
+				}
+			}
+			return View(list.ToPagedList(Page ?? 1, 3));
 		}
 
 		protected override void Dispose(bool disposing) {

@@ -1,4 +1,13 @@
-﻿@model ICollection<MVCProject.Models.BlogEntry>
+﻿@model PagedList.IPagedList<MVCProject.Models.BlogEntry>
+@using PagedList.Mvc
 @{
     ViewBag.Title = "Archive";
 }
+<div class="col-md-12">
+    @foreach (MVCProject.Models.BlogEntry b in Model) {
+        @Html.Partial("_BlogPost_List", b);
+    }
+</div>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, Page => Url.Action("BlogList", new { Page }))
